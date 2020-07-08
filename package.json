@@ -1,0 +1,24 @@
+{
+  "name": "minecraft-status-bot",
+  "version": "1.0.0",
+  "description": "鯖のステータスチェック",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "author": "Kamesuta",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Team-Fruit/MinecraftStatusBot.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "config": "^3.3.1",
+    "discord-command-parser": "^1.4.3",
+    "discord.js": "^12.2.0",
+    "js-yaml": "^3.14.0",
+    "minecraft-server-util": "^1.3.0",
+    "node-cron": "^2.0.3"
+  },
+  "devDependencies": {}
+}

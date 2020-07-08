@@ -1,0 +1,13 @@
+# ボットのトークン (環境変数 $DISCORD_TOKEN で指定可)
+token: ""
+
+# チェックタイミング (crontabのあれ)
+event: '* * * * *'
+
+# 発信するチャンネル (複数指定可)
+channels:
+  - guild: "000000000000000000" # DiscordサーバーID
+    channel: "000000000000000000" # DiscordチャンネルID
+    servers:
+      - name: テスト鯖
+        ip: "test.example.com:25565"
