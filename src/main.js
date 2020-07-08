@@ -15,14 +15,18 @@ cron.schedule(config.event, async () => {
   await Promise.all(config.channels.map(channelData => {
     return (async () => {
       const guild = client.guilds.resolve(channelData.guild);
+      if (guild === null)
+        throw new Error('サーバーIDが不正です');
       const channel = guild.channels.resolve(channelData.channel);
+      if (channel === null)
+        throw new Error('チャンネルIDが不正です');
 
       const results = await Promise.all(channelData.servers.map(serverData => {
         return (async () => {
-          let [ip, port] = serverData.ip.split(":");
+          let [ip, port] = serverData.ip.split(':');
           if (port === undefined)
             port = '25565';
-          const result = pinger(ip, Number(port))
+          const result = await pinger(ip, Number(port))
             .then(data => true)
             .catch(err => false);
           return {
@@ -33,14 +37,16 @@ cron.schedule(config.event, async () => {
       }));
 
       const embed = {
-        title: "タイトル",
+        title: 'サーバー状態',
+        color: 0x536C33,
         timestamp: new Date(),
-        fields: [
-          {
-            name: "field :one:",
-            value: "*ここはfield 1の内容だよ*"
-          }
-        ]
+        fields: results.map(server => {
+          return {
+            name: server.name,
+            value: server.online ? '✅' : '❌',
+            inline: true,
+          };
+        })
       };
 
       const messages = await channel.messages.fetch({ limit: 1 });
@@ -51,19 +57,6 @@ cron.schedule(config.event, async () => {
         await channel.send({ embed: embed });
     })();
   }));
-});
-
-client.on("message", (message) => {
-  const parsed = parser.parse(message, prefix);
-  if (!parsed.success) return;
-
-  if (parsed.command === "add") {
-    return message.reply("Add " + parsed.getString() + " => " + parsed.reader.getRemaining());
-  }
-
-  if (parsed.command === "remove") {
-    return message.reply("Remove " + parsed.getString());
-  }
 });
 
 client.login(config.token);
