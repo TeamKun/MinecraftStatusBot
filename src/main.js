@@ -2,13 +2,19 @@ const Discord = require('discord.js');
 const config = require('config');
 const pinger = require("minecraft-server-util");
 const cron = require("node-cron");
-const parser = require("discord-command-parser");
+const i18n = require("i18n");
 
 const prefix = "/status ";
 const client = new Discord.Client();
 
+i18n.configure({
+  locales: ['en', 'ja'],
+  defaultLocale: config.locale,
+  directory: __dirname + '/../locales',
+});
+
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(i18n.__('log.login', { user: client.user.tag }));
 });
 
 cron.schedule(config.event, async () => {
@@ -16,10 +22,10 @@ cron.schedule(config.event, async () => {
     return (async () => {
       const guild = client.guilds.resolve(channelData.guild);
       if (guild === null)
-        throw new Error('サーバーIDが不正です');
+        throw new Error(i18n.__('error.guild_id'));
       const channel = guild.channels.resolve(channelData.channel);
       if (channel === null)
-        throw new Error('チャンネルIDが不正です');
+        throw new Error(i18n.__('error.channel_id'));
 
       const results = await Promise.all(channelData.servers.map(serverData => {
         return (async () => {
@@ -37,13 +43,15 @@ cron.schedule(config.event, async () => {
       }));
 
       const embed = {
-        title: 'サーバー状態',
+        title: i18n.__('embed.title'),
         color: 0x536C33,
         timestamp: new Date(),
         fields: results.map(server => {
           return {
             name: server.name,
-            value: server.online ? '✅' : '❌',
+            value: server.online
+                ? i18n.__('embed.status.online')
+                : i18n.__('embed.status.offline'),
             inline: true,
           };
         })

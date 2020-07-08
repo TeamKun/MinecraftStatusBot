@@ -1,6 +1,9 @@
 # ボットのトークン (環境変数 $DISCORD_TOKEN で指定可)
 token: ""
 
+# 言語 (en, ja)
+locale: ja
+
 # チェックタイミング (crontabのあれ)
 event: '* * * * *'
 

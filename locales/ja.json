@@ -1,0 +1,8 @@
+{
+  "log.login": "{{user}} としてログイン!",
+  "embed.title": "サーバー状態",
+  "embed.status.online": "✅",
+  "embed.status.offline": "❌",
+  "error.guild_id": "サーバーIDが不正です",
+  "error.channel_id": "チャンネルIDが不正です"
+}

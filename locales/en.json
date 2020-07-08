@@ -1,0 +1,8 @@
+{
+  "log.login": "Logged in as {{user}}!",
+  "embed.title": "Server Status",
+  "embed.status.online": "✅",
+  "embed.status.offline": "❌",
+  "error.guild_id": "Invalid Guild ID",
+  "error.channel_id": "Invalid Channel ID"
+}
