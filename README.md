@@ -1,0 +1,2 @@
+# MinecraftStatusBot
+鯖のステータスチェック
